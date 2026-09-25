@@ -10,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>House Price Prediction - Result</title>
+    <title>House Price Prediction - Results</title>
 
 
     <!-- Google Font -->
@@ -32,12 +32,708 @@
     >
 
 
-    <!-- CSS -->
+    <!-- Main CSS -->
 
     <link
         rel="stylesheet"
         href="{{ url_for('static', path='style.css') }}"
     >
+
+
+    <!-- ==========================================
+         MODEL DETAIL CSS
+    =========================================== -->
+
+    <style>
+
+        /* ==========================================
+           CLICKABLE MODEL CARD
+        =========================================== */
+
+        .model-card-clickable {
+
+            cursor: pointer;
+
+            user-select: none;
+
+        }
+
+
+        .model-card-clickable:focus {
+
+            outline: 3px solid rgba(37, 99, 235, 0.18);
+
+            outline-offset: 3px;
+
+        }
+
+
+        .view-model {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 5px;
+
+            margin-top: 12px;
+
+            padding: 6px 10px;
+
+            border-radius: 8px;
+
+            background: #eff6ff;
+
+            border: 1px solid #dbeafe;
+
+            color: #2563eb;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease;
+
+        }
+
+
+        .model-card:hover .view-model {
+
+            background: #2563eb;
+
+            color: #ffffff;
+
+        }
+
+
+        /* ==========================================
+           MODEL DETAIL PAGE
+        =========================================== */
+
+        .model-detail-page {
+
+            display: none;
+
+            animation: detailFadeIn 0.3s ease;
+
+        }
+
+
+        .model-detail-page.active {
+
+            display: block;
+
+        }
+
+
+        @keyframes detailFadeIn {
+
+            from {
+
+                opacity: 0;
+
+                transform: translateY(10px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform: translateY(0);
+
+            }
+
+        }
+
+
+        /* ==========================================
+           BACK BUTTON
+        =========================================== */
+
+        .back-models-btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin-bottom: 20px;
+
+            padding: 11px 17px;
+
+            border: 1px solid #bfdbfe;
+
+            border-radius: 10px;
+
+            background: #ffffff;
+
+            color: #2563eb;
+
+            font-family: inherit;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease,
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+
+        }
+
+
+        .back-models-btn:hover {
+
+            background: #2563eb;
+
+            color: #ffffff;
+
+            transform: translateX(-2px);
+
+            box-shadow:
+                0 7px 18px rgba(37, 99, 235, 0.18);
+
+        }
+
+
+        /* ==========================================
+           DETAIL HERO
+        =========================================== */
+
+        .model-detail-hero {
+
+            position: relative;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0f2a5f,
+                    #1d4ed8,
+                    #2563eb
+                );
+
+            border-radius: 24px;
+
+            padding: 32px;
+
+            color: #ffffff;
+
+            margin-bottom: 20px;
+
+            box-shadow:
+                0 18px 42px rgba(37, 99, 235, 0.22);
+
+        }
+
+
+        .model-detail-hero::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 220px;
+
+            height: 220px;
+
+            right: -80px;
+
+            top: -100px;
+
+            background: rgba(255, 255, 255, 0.08);
+
+            border-radius: 50%;
+
+        }
+
+
+        .model-detail-top {
+
+            position: relative;
+
+            z-index: 1;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 16px;
+
+            margin-bottom: 28px;
+
+        }
+
+
+        .detail-model-icon {
+
+            width: 65px;
+
+            height: 65px;
+
+            min-width: 65px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 18px;
+
+            background: rgba(255, 255, 255, 0.15);
+
+            border: 1px solid rgba(255, 255, 255, 0.18);
+
+            font-size: 31px;
+
+        }
+
+
+        .detail-model-name {
+
+            font-size: 27px;
+
+            font-weight: 800;
+
+            margin: 0;
+
+        }
+
+
+        .detail-model-type {
+
+            display: block;
+
+            margin-top: 5px;
+
+            font-size: 13px;
+
+            opacity: 0.82;
+
+        }
+
+
+        /* ==========================================
+           MAIN PREDICTION
+        =========================================== */
+
+        .detail-price-label {
+
+            position: relative;
+
+            z-index: 1;
+
+            font-size: 12px;
+
+            opacity: 0.78;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.8px;
+
+            font-weight: 700;
+
+        }
+
+
+        .detail-price {
+
+            position: relative;
+
+            z-index: 1;
+
+            margin-top: 7px;
+
+            font-size: 42px;
+
+            line-height: 1.15;
+
+            font-weight: 800;
+
+        }
+
+
+        .detail-price-description {
+
+            position: relative;
+
+            z-index: 1;
+
+            margin-top: 8px;
+
+            font-size: 12px;
+
+            opacity: 0.75;
+
+        }
+
+
+        /* ==========================================
+           DETAIL METRICS
+        =========================================== */
+
+        .detail-metrics-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 16px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .detail-metric-card {
+
+            background: #ffffff;
+
+            border: 1px solid #dbeafe;
+
+            border-radius: 18px;
+
+            padding: 22px;
+
+            box-shadow:
+                0 9px 25px rgba(15, 23, 42, 0.05);
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+
+        }
+
+
+        .detail-metric-card:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 13px 30px rgba(37, 99, 235, 0.10);
+
+        }
+
+
+        .detail-metric-icon {
+
+            width: 40px;
+
+            height: 40px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #eff6ff;
+
+            border: 1px solid #dbeafe;
+
+            border-radius: 11px;
+
+            font-size: 19px;
+
+            margin-bottom: 14px;
+
+        }
+
+
+        .detail-metric-label {
+
+            display: block;
+
+            color: #64748b;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+        }
+
+
+        .detail-metric-value {
+
+            display: block;
+
+            margin-top: 5px;
+
+            color: #0f2a5f;
+
+            font-size: 22px;
+
+            font-weight: 800;
+
+        }
+
+
+        /* ==========================================
+           DETAIL INPUT SECTION
+        =========================================== */
+
+        .detail-input-card {
+
+            background: #ffffff;
+
+            border: 1px solid #dbeafe;
+
+            border-radius: 22px;
+
+            padding: 27px;
+
+            margin-bottom: 20px;
+
+            box-shadow:
+                0 10px 30px rgba(15, 23, 42, 0.05);
+
+        }
+
+
+        .detail-section-heading {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .detail-section-icon {
+
+            width: 43px;
+
+            height: 43px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #eff6ff;
+
+            border: 1px solid #dbeafe;
+
+            border-radius: 12px;
+
+            font-size: 20px;
+
+        }
+
+
+        .detail-section-heading h3 {
+
+            margin: 0;
+
+            color: #0f2a5f;
+
+            font-size: 19px;
+
+            font-weight: 800;
+
+        }
+
+
+        .detail-section-heading p {
+
+            margin-top: 3px;
+
+            color: #64748b;
+
+            font-size: 12px;
+
+        }
+
+
+        .detail-input-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 13px;
+
+        }
+
+
+        .detail-input-item {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f8fbff,
+                    #eff6ff
+                );
+
+            border: 1px solid #dbeafe;
+
+            border-radius: 13px;
+
+            padding: 14px;
+
+        }
+
+
+        .detail-input-item small {
+
+            display: block;
+
+            color: #64748b;
+
+            font-size: 10px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .detail-input-item strong {
+
+            display: block;
+
+            color: #0f2a5f;
+
+            font-size: 14px;
+
+        }
+
+
+        /* ==========================================
+           DETAIL FOOTER ACTION
+        =========================================== */
+
+        .detail-action {
+
+            display: flex;
+
+            justify-content: center;
+
+            margin-top: 25px;
+
+        }
+
+
+        /* ==========================================
+           HIDE MAIN RESULT
+        =========================================== */
+
+        .models-view.hidden {
+
+            display: none;
+
+        }
+
+
+        /* ==========================================
+           RESPONSIVE
+        =========================================== */
+
+        @media (max-width: 900px) {
+
+            .detail-input-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+
+            .detail-metrics-grid {
+
+                grid-template-columns:
+                    repeat(3, 1fr);
+
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .detail-metrics-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .detail-price {
+
+                font-size: 32px;
+
+            }
+
+
+            .detail-model-name {
+
+                font-size: 22px;
+
+            }
+
+        }
+
+
+        @media (max-width: 520px) {
+
+            .model-detail-hero {
+
+                padding: 24px;
+
+                border-radius: 19px;
+
+            }
+
+
+            .detail-input-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .detail-model-icon {
+
+                width: 55px;
+
+                height: 55px;
+
+                min-width: 55px;
+
+                font-size: 26px;
+
+            }
+
+
+            .detail-price {
+
+                font-size: 28px;
+
+            }
+
+        }
+
+    </style>
 
 </head>
 
@@ -48,9 +744,9 @@
 <div class="container">
 
 
-    <!-- =================================
+    <!-- ==========================================
          HEADER
-    ================================== -->
+    =========================================== -->
 
     <div class="header">
 
@@ -65,7 +761,7 @@
             </h1>
 
             <p>
-                Machine Learning Prediction Result
+                Machine Learning Prediction Results
             </p>
 
         </div>
@@ -73,436 +769,823 @@
     </div>
 
 
-    <!-- =================================
+    <!-- ==========================================
          ERROR
-    ================================== -->
+    =========================================== -->
 
     {% if error %}
 
-    <div class="error-card">
 
-        ⚠️ {{ error }}
+        <div class="error-card">
 
-    </div>
+            ⚠️ {{ error }}
+
+        </div>
 
 
-    <div class="new-prediction-container">
+        <div class="new-prediction-container">
 
-        <a
-            href="/"
-            class="new-prediction-btn"
-        >
-            ← Back to Prediction
-        </a>
+            <a
+                href="/"
+                class="new-prediction-btn"
+            >
 
-    </div>
+                ← Back to Prediction
+
+            </a>
+
+        </div>
 
 
     {% else %}
 
 
-    <!-- =================================
-         PREDICTION RESULT
-    ================================== -->
+        <!-- ==========================================
+             ALL MODELS VIEW
+        =========================================== -->
 
-    <div class="prediction-card">
+        <div
+            id="modelsView"
+            class="models-view"
+        >
 
-        <div class="prediction-icon">
-            🏠
-        </div>
 
+            <!-- ======================================
+                 ALL MODEL PREDICTIONS
+            ======================================= -->
 
-        <div class="prediction-content">
+            <div class="results-card">
 
-            <p>
-                Predicted House Price
-            </p>
 
-            <h2>
-                ₹ {{ "{:,.2f}".format(prediction) }}
-            </h2>
+                <div class="results-header">
 
-            <span>
-                Best Model:
-                <strong>
-                    {{ best_model }}
-                </strong>
-            </span>
+                    <div class="results-header-icon">
+                        💰
+                    </div>
 
-        </div>
 
-    </div>
+                    <div>
 
+                        <h2>
+                            Predicted House Prices
+                        </h2>
 
-    <!-- =================================
-         INPUT SUMMARY
-    ================================== -->
+                        <p>
+                            Click any model to view its complete prediction details
+                        </p>
 
-    <div class="card">
+                    </div>
 
-        <div class="section-title">
+                </div>
 
-            <span>
-                📋
-            </span>
 
-            <div>
+                <!-- MODEL GRID -->
 
-                <h2>
-                    Your Input
-                </h2>
+                <div class="model-grid">
 
-                <p>
-                    Property information used for prediction
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="input-summary">
-
-
-            <!-- AREA -->
-
-            <div>
-
-                <small>
-                    Area
-                </small>
-
-                <strong>
-                    {{ input_data.Area }}
-                </strong>
-
-            </div>
-
-
-            <!-- BEDROOMS -->
-
-            <div>
-
-                <small>
-                    Bedrooms
-                </small>
-
-                <strong>
-                    {{ input_data.Bedrooms }}
-                </strong>
-
-            </div>
-
-
-            <!-- BATHROOMS -->
-
-            <div>
-
-                <small>
-                    Bathrooms
-                </small>
-
-                <strong>
-                    {{ input_data.Bathrooms }}
-                </strong>
-
-            </div>
-
-
-            <!-- FLOORS -->
-
-            <div>
-
-                <small>
-                    Floors
-                </small>
-
-                <strong>
-                    {{ input_data.Floors }}
-                </strong>
-
-            </div>
-
-
-            <!-- YEAR BUILT -->
-
-            <div>
-
-                <small>
-                    Year Built
-                </small>
-
-                <strong>
-                    {{ input_data.YearBuilt }}
-                </strong>
-
-            </div>
-
-
-            <!-- LOCATION -->
-
-            <div>
-
-                <small>
-                    Location
-                </small>
-
-                <strong>
-                    {{ input_data.Location }}
-                </strong>
-
-            </div>
-
-
-            <!-- CONDITION -->
-
-            <div>
-
-                <small>
-                    Condition
-                </small>
-
-                <strong>
-                    {{ input_data.Condition }}
-                </strong>
-
-            </div>
-
-
-            <!-- GARAGE -->
-
-            <div>
-
-                <small>
-                    Garage
-                </small>
-
-                <strong>
-                    {{ input_data.Garage }}
-                </strong>
-
-            </div>
-
-
-        </div>
-
-    </div>
-
-
-    <!-- =================================
-         MODEL COMPARISON
-    ================================== -->
-
-    <div class="card">
-
-        <div class="section-title">
-
-            <span>
-                📊
-            </span>
-
-            <div>
-
-                <h2>
-                    Model Comparison
-                </h2>
-
-                <p>
-                    Prediction and performance of every regression model
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="table-container">
-
-            <table>
-
-                <thead>
-
-                    <tr>
-
-                        <th>
-                            Model
-                        </th>
-
-                        <th>
-                            Predicted Price
-                        </th>
-
-                        <th>
-                            R² Score
-                        </th>
-
-                        <th>
-                            MAE
-                        </th>
-
-                        <th>
-                            RMSE
-                        </th>
-
-                    </tr>
-
-                </thead>
-
-
-                <tbody>
 
                     {% for item in predictions %}
 
-                    <tr
-                        {% if item.model == best_model %}
-                            class="best-row"
-                        {% endif %}
-                    >
+
+                        <div
+                            class="model-card model-card-clickable"
+                            tabindex="0"
+                            role="button"
+
+                            data-model="{{ item.model }}"
+                            data-prediction="{{ item.prediction }}"
+                            data-r2="{{ item.r2 }}"
+                            data-mae="{{ item.mae }}"
+                            data-rmse="{{ item.rmse }}"
+
+                            onclick="openModelDetails(this)"
+
+                            onkeydown="handleModelKey(event, this)"
+                        >
 
 
-                        <!-- MODEL -->
+                            <!-- MODEL HEADER -->
 
-                        <td>
+                            <div class="model-top">
 
-                            <div class="model-name">
 
-                                {% if item.model == best_model %}
+                                <div class="model-icon">
 
-                                <span class="best-badge">
-                                     
-                                </span>
 
-                                {% endif %}
+                                    {% if item.model == "Linear Regression" %}
+                                        📈
 
-                                {{ item.model }}
+                                    {% elif item.model == "Ridge" %}
+                                        🛡️
+
+                                    {% elif item.model == "Lasso" %}
+                                        🎯
+
+                                    {% elif item.model == "ElasticNet" %}
+                                        🔗
+
+                                    {% elif item.model == "KNN" %}
+                                        🔍
+
+                                    {% elif item.model == "Decision Tree" %}
+                                        🌳
+
+                                    {% elif item.model == "Random Forest" %}
+                                        🌲
+
+                                    {% elif item.model == "Gradient Boosting" %}
+                                        🚀
+
+                                    {% elif item.model == "AdaBoost" %}
+                                        ⚡
+
+                                    {% elif item.model == "Extra Trees" %}
+                                        🌴
+
+                                    {% elif item.model == "SVR" %}
+                                        📊
+
+                                    {% elif item.model == "Polynomial Regression" %}
+                                        📐
+
+                                    {% else %}
+                                        🤖
+
+                                    {% endif %}
+
+
+                                </div>
+
+
+                                <div class="model-info">
+
+                                    <h3>
+                                        {{ item.model }}
+                                    </h3>
+
+                                    <span>
+                                        Regression Model
+                                    </span>
+
+                                </div>
+
 
                             </div>
 
-                        </td>
+
+                            <!-- PRICE -->
+
+                            <div class="model-price-label">
+                                Predicted Price
+                            </div>
 
 
-                        <!-- PRICE -->
+                            <div class="model-price">
 
-                        <td class="price">
+                                ₹ {{ "{:,.2f}".format(item.prediction|float) }}
 
-                            ₹ {{ "{:,.2f}".format(item.prediction) }}
-
-                        </td>
+                            </div>
 
 
-                        <!-- R2 -->
+                            <!-- METRICS -->
 
-                        <td>
-
-                            <span class="r2">
-                                {{ item.r2 }}
-                            </span>
-
-                        </td>
+                            <div class="model-metrics">
 
 
-                        <!-- MAE -->
+                                <div class="metric">
 
-                        <td>
+                                    <span class="metric-label">
+                                        R² Score
+                                    </span>
 
-                            ₹ {{ "{:,.2f}".format(item.mae) }}
+                                    <span class="metric-value">
+                                        {{ item.r2 }}
+                                    </span>
 
-                        </td>
-
-
-                        <!-- RMSE -->
-
-                        <td>
-
-                            ₹ {{ "{:,.2f}".format(item.rmse) }}
-
-                        </td>
+                                </div>
 
 
-                    </tr>
+                                <div class="metric">
+
+                                    <span class="metric-label">
+                                        MAE
+                                    </span>
+
+                                    <span class="metric-value">
+                                        ₹{{ "{:,.0f}".format(item.mae|float) }}
+                                    </span>
+
+                                </div>
+
+
+                                <div class="metric">
+
+                                    <span class="metric-label">
+                                        RMSE
+                                    </span>
+
+                                    <span class="metric-value">
+                                        ₹{{ "{:,.0f}".format(item.rmse|float) }}
+                                    </span>
+
+                                </div>
+
+
+                            </div>
+
+
+                            <!-- VIEW BUTTON -->
+
+                            <div class="view-model">
+
+                                View Details →
+
+                            </div>
+
+
+                        </div>
+
 
                     {% endfor %}
 
-                </tbody>
 
-            </table>
+                </div>
+
+
+            </div>
+
+
+            <!-- ======================================
+                 MODEL SUMMARY
+            ======================================= -->
+
+            <div class="metrics-info">
+
+
+                <div>
+
+                    <strong>
+                        {{ predictions|length }}
+                    </strong>
+
+                    <span>
+                        Models Evaluated
+                    </span>
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        R²
+                    </strong>
+
+                    <span>
+                        Higher is better
+                    </span>
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        MAE
+                    </strong>
+
+                    <span>
+                        Lower is better
+                    </span>
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        RMSE
+                    </strong>
+
+                    <span>
+                        Lower is better
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ======================================
+                 INPUT SUMMARY
+            ======================================= -->
+
+            <div class="input-card">
+
+
+                <div class="section-title">
+
+                    <span>
+                        📋
+                    </span>
+
+
+                    <div>
+
+                        <h2>
+                            Your Input
+                        </h2>
+
+                        <p>
+                            Property information used for prediction
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="input-grid">
+
+
+                    <div class="input-item">
+
+                        <small>
+                            Area
+                        </small>
+
+                        <strong>
+                            {{ input_data.Area }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="input-item">
+
+                        <small>
+                            Bedrooms
+                        </small>
+
+                        <strong>
+                            {{ input_data.Bedrooms }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="input-item">
+
+                        <small>
+                            Bathrooms
+                        </small>
+
+                        <strong>
+                            {{ input_data.Bathrooms }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="input-item">
+
+                        <small>
+                            Floors
+                        </small>
+
+                        <strong>
+                            {{ input_data.Floors }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="input-item">
+
+                        <small>
+                            Year Built
+                        </small>
+
+                        <strong>
+                            {{ input_data.YearBuilt }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="input-item">
+
+                        <small>
+                            Location
+                        </small>
+
+                        <strong>
+                            {{ input_data.Location }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="input-item">
+
+                        <small>
+                            Condition
+                        </small>
+
+                        <strong>
+                            {{ input_data.Condition }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="input-item">
+
+                        <small>
+                            Garage
+                        </small>
+
+                        <strong>
+                            {{ input_data.Garage }}
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+            <!-- NEW PREDICTION -->
+
+            <div class="new-prediction-container">
+
+                <a
+                    href="/"
+                    class="new-prediction-btn"
+                >
+
+                    🔄 Make New Prediction
+
+                </a>
+
+            </div>
+
 
         </div>
 
-    </div>
 
 
-    <!-- =================================
-         METRIC INFORMATION
-    ================================== -->
+        <!-- ==========================================
+             INDIVIDUAL MODEL DETAIL VIEW
+        =========================================== -->
 
-    <div class="metrics-info">
-
-        <div>
-
-            <strong>
-                R²
-            </strong>
-
-            <span>
-                Higher is better
-            </span>
-
-        </div>
-
-
-        <div>
-
-            <strong>
-                MAE
-            </strong>
-
-            <span>
-                Lower is better
-            </span>
-
-        </div>
-
-
-        <div>
-
-            <strong>
-                RMSE
-            </strong>
-
-            <span>
-                Lower is better
-            </span>
-
-        </div>
-
-    </div>
-
-
-    <!-- =================================
-         NEW PREDICTION
-    ================================== -->
-
-    <div class="new-prediction-container">
-
-        <a
-            href="/"
-            class="new-prediction-btn"
+        <div
+            id="modelDetailView"
+            class="model-detail-page"
         >
 
-            🔄 Make New Prediction
 
-        </a>
+            <!-- BACK -->
 
-    </div>
+            <button
+                type="button"
+                class="back-models-btn"
+                onclick="showAllModels()"
+            >
+
+                ← Back to All Models
+
+            </button>
+
+
+            <!-- HERO -->
+
+            <div class="model-detail-hero">
+
+
+                <div class="model-detail-top">
+
+
+                    <div
+                        id="detailModelIcon"
+                        class="detail-model-icon"
+                    >
+                        🤖
+                    </div>
+
+
+                    <div>
+
+                        <h2
+                            id="detailModelName"
+                            class="detail-model-name"
+                        >
+                            Model
+                        </h2>
+
+
+                        <span class="detail-model-type">
+                            Regression Model Prediction
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="detail-price-label">
+
+                    Predicted House Price
+
+                </div>
+
+
+                <div
+                    id="detailPrediction"
+                    class="detail-price"
+                >
+
+                    ₹ 0.00
+
+                </div>
+
+
+                <div class="detail-price-description">
+
+                    Prediction generated using the selected regression model.
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ======================================
+                 PERFORMANCE METRICS
+            ======================================= -->
+
+            <div class="detail-metrics-grid">
+
+
+                <!-- R2 -->
+
+                <div class="detail-metric-card">
+
+
+                    <div class="detail-metric-icon">
+                        📊
+                    </div>
+
+
+                    <span class="detail-metric-label">
+                        R² Score
+                    </span>
+
+
+                    <span
+                        id="detailR2"
+                        class="detail-metric-value"
+                    >
+                        -
+                    </span>
+
+
+                </div>
+
+
+                <!-- MAE -->
+
+                <div class="detail-metric-card">
+
+
+                    <div class="detail-metric-icon">
+                        📉
+                    </div>
+
+
+                    <span class="detail-metric-label">
+                        Mean Absolute Error
+                    </span>
+
+
+                    <span
+                        id="detailMAE"
+                        class="detail-metric-value"
+                    >
+                        -
+                    </span>
+
+
+                </div>
+
+
+                <!-- RMSE -->
+
+                <div class="detail-metric-card">
+
+
+                    <div class="detail-metric-icon">
+                        📐
+                    </div>
+
+
+                    <span class="detail-metric-label">
+                        Root Mean Square Error
+                    </span>
+
+
+                    <span
+                        id="detailRMSE"
+                        class="detail-metric-value"
+                    >
+                        -
+                    </span>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ======================================
+                 INPUT USED
+            ======================================= -->
+
+            <div class="detail-input-card">
+
+
+                <div class="detail-section-heading">
+
+
+                    <div class="detail-section-icon">
+                        🏠
+                    </div>
+
+
+                    <div>
+
+                        <h3>
+                            Property Information
+                        </h3>
+
+                        <p>
+                            Input values used by this model
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="detail-input-grid">
+
+
+                    <div class="detail-input-item">
+
+                        <small>
+                            Area
+                        </small>
+
+                        <strong>
+                            {{ input_data.Area }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-input-item">
+
+                        <small>
+                            Bedrooms
+                        </small>
+
+                        <strong>
+                            {{ input_data.Bedrooms }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-input-item">
+
+                        <small>
+                            Bathrooms
+                        </small>
+
+                        <strong>
+                            {{ input_data.Bathrooms }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-input-item">
+
+                        <small>
+                            Floors
+                        </small>
+
+                        <strong>
+                            {{ input_data.Floors }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-input-item">
+
+                        <small>
+                            Year Built
+                        </small>
+
+                        <strong>
+                            {{ input_data.YearBuilt }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-input-item">
+
+                        <small>
+                            Location
+                        </small>
+
+                        <strong>
+                            {{ input_data.Location }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-input-item">
+
+                        <small>
+                            Condition
+                        </small>
+
+                        <strong>
+                            {{ input_data.Condition }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-input-item">
+
+                        <small>
+                            Garage
+                        </small>
+
+                        <strong>
+                            {{ input_data.Garage }}
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- BACK BUTTON -->
+
+            <div class="detail-action">
+
+                <button
+                    type="button"
+                    class="back-models-btn"
+                    onclick="showAllModels()"
+                >
+
+                    ← View All Regression Models
+
+                </button>
+
+            </div>
+
+
+        </div>
 
 
     {% endif %}
 
 
-    <!-- =================================
+    <!-- ==========================================
          FOOTER
-    ================================== -->
+    =========================================== -->
 
     <footer>
 
@@ -516,6 +1599,286 @@
 
 
 </div>
+
+
+
+<!-- ==========================================
+     JAVASCRIPT
+=========================================== -->
+
+<script>
+
+
+    /* ==========================================
+       MODEL ICON FUNCTION
+    =========================================== */
+
+    function getModelIcon(modelName) {
+
+        const icons = {
+
+            "Linear Regression": "📈",
+
+            "Ridge": "🛡️",
+
+            "Lasso": "🎯",
+
+            "ElasticNet": "🔗",
+
+            "KNN": "🔍",
+
+            "Decision Tree": "🌳",
+
+            "Random Forest": "🌲",
+
+            "Gradient Boosting": "🚀",
+
+            "AdaBoost": "⚡",
+
+            "Extra Trees": "🌴",
+
+            "SVR": "📊",
+
+            "Polynomial Regression": "📐"
+
+        };
+
+
+        return icons[modelName] || "🤖";
+
+    }
+
+
+
+    /* ==========================================
+       FORMAT PRICE
+    =========================================== */
+
+    function formatPrice(value) {
+
+        const number = Number(value);
+
+
+        if (Number.isNaN(number)) {
+
+            return "₹ 0.00";
+
+        }
+
+
+        return "₹ " + number.toLocaleString(
+            "en-IN",
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        );
+
+    }
+
+
+
+    /* ==========================================
+       FORMAT NUMBER
+    =========================================== */
+
+    function formatNumber(value) {
+
+        const number = Number(value);
+
+
+        if (Number.isNaN(number)) {
+
+            return "0";
+
+        }
+
+
+        return number.toLocaleString(
+            "en-IN",
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        );
+
+    }
+
+
+
+    /* ==========================================
+       OPEN MODEL DETAILS
+    =========================================== */
+
+    function openModelDetails(card) {
+
+
+        const modelName =
+            card.dataset.model;
+
+
+        const prediction =
+            card.dataset.prediction;
+
+
+        const r2 =
+            card.dataset.r2;
+
+
+        const mae =
+            card.dataset.mae;
+
+
+        const rmse =
+            card.dataset.rmse;
+
+
+        /* --------------------------------------
+           Set model name
+        -------------------------------------- */
+
+        document.getElementById(
+            "detailModelName"
+        ).textContent = modelName;
+
+
+        /* --------------------------------------
+           Set icon
+        -------------------------------------- */
+
+        document.getElementById(
+            "detailModelIcon"
+        ).textContent =
+            getModelIcon(modelName);
+
+
+        /* --------------------------------------
+           Set prediction
+        -------------------------------------- */
+
+        document.getElementById(
+            "detailPrediction"
+        ).textContent =
+            formatPrice(prediction);
+
+
+        /* --------------------------------------
+           Set R2
+        -------------------------------------- */
+
+        document.getElementById(
+            "detailR2"
+        ).textContent =
+            formatNumber(r2);
+
+
+        /* --------------------------------------
+           Set MAE
+        -------------------------------------- */
+
+        document.getElementById(
+            "detailMAE"
+        ).textContent =
+            formatPrice(mae);
+
+
+        /* --------------------------------------
+           Set RMSE
+        -------------------------------------- */
+
+        document.getElementById(
+            "detailRMSE"
+        ).textContent =
+            formatPrice(rmse);
+
+
+        /* --------------------------------------
+           Hide all models
+        -------------------------------------- */
+
+        document.getElementById(
+            "modelsView"
+        ).classList.add("hidden");
+
+
+        /* --------------------------------------
+           Show detail
+        -------------------------------------- */
+
+        document.getElementById(
+            "modelDetailView"
+        ).classList.add("active");
+
+
+        /* --------------------------------------
+           Scroll to top
+        -------------------------------------- */
+
+        window.scrollTo({
+
+            top: 0,
+
+            behavior: "smooth"
+
+        });
+
+    }
+
+
+
+    /* ==========================================
+       KEYBOARD SUPPORT
+    =========================================== */
+
+    function handleModelKey(
+        event,
+        card
+    ) {
+
+        if (
+            event.key === "Enter" ||
+            event.key === " "
+        ) {
+
+            event.preventDefault();
+
+            openModelDetails(card);
+
+        }
+
+    }
+
+
+
+    /* ==========================================
+       SHOW ALL MODELS
+    =========================================== */
+
+    function showAllModels() {
+
+
+        document.getElementById(
+            "modelDetailView"
+        ).classList.remove("active");
+
+
+        document.getElementById(
+            "modelsView"
+        ).classList.remove("hidden");
+
+
+        window.scrollTo({
+
+            top: 0,
+
+            behavior: "smooth"
+
+        });
+
+    }
+
+
+</script>
 
 
 </body>
