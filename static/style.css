@@ -1,0 +1,498 @@
+/* ==============================
+   GLOBAL
+============================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Inter", Arial, sans-serif;
+    background: #eef2ff;
+    color: #172033;
+}
+
+
+/* ==============================
+   MAIN CONTAINER
+============================== */
+
+.container {
+    width: 92%;
+    max-width: 1150px;
+    margin: auto;
+    padding: 40px 0;
+}
+
+
+/* ==============================
+   HEADER
+============================== */
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.logo {
+    width: 65px;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: white;
+    border-radius: 18px;
+    font-size: 32px;
+
+    box-shadow: 0 8px 25px rgba(0,0,0,.08);
+}
+
+.header h1 {
+    font-size: 32px;
+    color: #172554;
+}
+
+.header p {
+    margin-top: 5px;
+    color: #64748b;
+}
+
+
+/* ==============================
+   ALL SECTIONS
+============================== */
+
+.card,
+.prediction-card,
+.metrics-info,
+.new-prediction-container {
+    width: 100%;
+}
+
+
+/* ==============================
+   CARD
+============================== */
+
+.card {
+    background: white;
+    padding: 28px;
+    margin-bottom: 24px;
+    border-radius: 18px;
+
+    box-shadow:
+        0 10px 30px rgba(15,23,42,.07);
+}
+
+
+/* ==============================
+   SECTION TITLE
+============================== */
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+}
+
+.section-title > span {
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eef2ff;
+    border-radius: 12px;
+    font-size: 22px;
+}
+
+.section-title h2 {
+    font-size: 20px;
+    color: #172554;
+}
+
+.section-title p {
+    margin-top: 4px;
+    color: #64748b;
+    font-size: 13px;
+}
+
+
+/* ==============================
+   FORM
+============================== */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 13px;
+
+    border: 1px solid #dbe2ea;
+    border-radius: 10px;
+
+    background: #f8fafc;
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #6366f1;
+    background: white;
+
+    box-shadow:
+        0 0 0 3px rgba(99,102,241,.1);
+}
+
+
+/* ==============================
+   PREDICT BUTTON
+============================== */
+
+.predict-btn {
+    width: 100%;
+    margin-top: 24px;
+    padding: 15px;
+
+    border: none;
+    border-radius: 11px;
+
+    background: linear-gradient(
+        135deg,
+        #4f46e5,
+        #7c3aed
+    );
+
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 20px rgba(79,70,229,.25);
+}
+
+.predict-btn:hover {
+    transform: translateY(-2px);
+}
+
+
+/* ==============================
+   PREDICTION
+============================== */
+
+.prediction-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    padding: 30px;
+    margin-bottom: 25px;
+
+    border-radius: 20px;
+
+    background: linear-gradient(
+        135deg,
+        #312e81,
+        #4f46e5,
+        #7c3aed
+    );
+
+    color: white;
+
+    box-shadow:
+        0 15px 35px rgba(79,70,229,.25);
+}
+
+.prediction-icon {
+    width: 72px;
+    height: 72px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(255,255,255,.15);
+    border-radius: 18px;
+
+    font-size: 36px;
+}
+
+.prediction-content h2 {
+    margin: 5px 0;
+
+    font-size: 34px;
+}
+
+.prediction-content p {
+    font-size: 13px;
+    opacity: .8;
+}
+
+
+/* ==============================
+   INPUT SUMMARY
+============================== */
+
+.input-summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 13px;
+}
+
+.input-summary div {
+    padding: 15px;
+
+    background: #f8fafc;
+    border: 1px solid #e5eaf1;
+
+    border-radius: 12px;
+}
+
+.input-summary small {
+    display: block;
+    margin-bottom: 5px;
+
+    color: #64748b;
+    font-size: 11px;
+}
+
+.input-summary strong {
+    font-size: 14px;
+}
+
+
+/* ==============================
+   TABLE
+============================== */
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+}
+
+table {
+    width: 100%;
+    min-width: 700px;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #f1f5ff;
+}
+
+th {
+    padding: 14px;
+    text-align: left;
+
+    font-size: 11px;
+    color: #64748b;
+}
+
+td {
+    padding: 15px 14px;
+    border-top: 1px solid #edf0f4;
+
+    font-size: 13px;
+}
+
+tbody tr:hover {
+    background: #f8fafc;
+}
+
+.price {
+    color: #4f46e5;
+    font-weight: 700;
+}
+
+.r2 {
+    padding: 5px 9px;
+
+    background: #eef2ff;
+    color: #4f46e5;
+
+    border-radius: 7px;
+    font-weight: 700;
+}
+
+.best-row {
+    background: #f5f3ff;
+}
+
+.best-badge {
+    padding: 4px 7px;
+
+    background: #fef3c7;
+    color: #92400e;
+
+    border-radius: 6px;
+
+    font-size: 9px;
+    font-weight: 800;
+}
+
+
+/* ==============================
+   METRICS
+============================== */
+
+.metrics-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+
+    margin-bottom: 25px;
+}
+
+.metrics-info div {
+    background: white;
+    padding: 18px;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 8px 22px rgba(15,23,42,.05);
+}
+
+.metrics-info strong {
+    display: block;
+    font-size: 18px;
+}
+
+.metrics-info span {
+    color: #64748b;
+    font-size: 12px;
+}
+
+
+/* ==============================
+   BUTTON
+============================== */
+
+.new-prediction-container {
+    text-align: center;
+    margin: 25px 0;
+}
+
+.new-prediction-btn {
+    display: inline-block;
+
+    padding: 13px 25px;
+
+    border-radius: 11px;
+
+    background: linear-gradient(
+        135deg,
+        #4f46e5,
+        #7c3aed
+    );
+
+    color: white;
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    box-shadow:
+        0 8px 20px rgba(79,70,229,.2);
+}
+
+
+/* ==============================
+   ERROR
+============================== */
+
+.error-card {
+    padding: 15px;
+    margin-bottom: 20px;
+
+    background: #fff1f2;
+    color: #be123c;
+
+    border: 1px solid #fecdd3;
+    border-radius: 12px;
+}
+
+
+/* ==============================
+   FOOTER
+============================== */
+
+footer {
+    text-align: center;
+    padding: 20px;
+
+    color: #64748b;
+    font-size: 12px;
+}
+
+
+/* ==============================
+   MOBILE
+============================== */
+
+@media (max-width: 750px) {
+
+    .container {
+        width: 94%;
+        padding: 25px 0;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .input-summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .metrics-info {
+        grid-template-columns: 1fr;
+    }
+
+    .header h1 {
+        font-size: 24px;
+    }
+
+    .prediction-content h2 {
+        font-size: 28px;
+    }
+}
+
+
+@media (max-width: 450px) {
+
+    .input-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .prediction-card {
+        align-items: flex-start;
+    }
+}

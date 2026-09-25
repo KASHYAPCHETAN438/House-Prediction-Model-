@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>House Price Prediction - Result</title>
+
+
+    <!-- Google Font -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- CSS -->
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', path='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- =================================
+         HEADER
+    ================================== -->
+
+    <div class="header">
+
+        <div class="logo">
+            🏠
+        </div>
+
+        <div>
+
+            <h1>
+                House Price Prediction
+            </h1>
+
+            <p>
+                Machine Learning Prediction Result
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================
+         ERROR
+    ================================== -->
+
+    {% if error %}
+
+    <div class="error-card">
+
+        ⚠️ {{ error }}
+
+    </div>
+
+
+    <div class="new-prediction-container">
+
+        <a
+            href="/"
+            class="new-prediction-btn"
+        >
+            ← Back to Prediction
+        </a>
+
+    </div>
+
+
+    {% else %}
+
+
+    <!-- =================================
+         PREDICTION RESULT
+    ================================== -->
+
+    <div class="prediction-card">
+
+        <div class="prediction-icon">
+            🏠
+        </div>
+
+
+        <div class="prediction-content">
+
+            <p>
+                Predicted House Price
+            </p>
+
+            <h2>
+                ₹ {{ "{:,.2f}".format(prediction) }}
+            </h2>
+
+            <span>
+                Best Model:
+                <strong>
+                    {{ best_model }}
+                </strong>
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================
+         INPUT SUMMARY
+    ================================== -->
+
+    <div class="card">
+
+        <div class="section-title">
+
+            <span>
+                📋
+            </span>
+
+            <div>
+
+                <h2>
+                    Your Input
+                </h2>
+
+                <p>
+                    Property information used for prediction
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="input-summary">
+
+
+            <!-- AREA -->
+
+            <div>
+
+                <small>
+                    Area
+                </small>
+
+                <strong>
+                    {{ input_data.Area }}
+                </strong>
+
+            </div>
+
+
+            <!-- BEDROOMS -->
+
+            <div>
+
+                <small>
+                    Bedrooms
+                </small>
+
+                <strong>
+                    {{ input_data.Bedrooms }}
+                </strong>
+
+            </div>
+
+
+            <!-- BATHROOMS -->
+
+            <div>
+
+                <small>
+                    Bathrooms
+                </small>
+
+                <strong>
+                    {{ input_data.Bathrooms }}
+                </strong>
+
+            </div>
+
+
+            <!-- FLOORS -->
+
+            <div>
+
+                <small>
+                    Floors
+                </small>
+
+                <strong>
+                    {{ input_data.Floors }}
+                </strong>
+
+            </div>
+
+
+            <!-- YEAR BUILT -->
+
+            <div>
+
+                <small>
+                    Year Built
+                </small>
+
+                <strong>
+                    {{ input_data.YearBuilt }}
+                </strong>
+
+            </div>
+
+
+            <!-- LOCATION -->
+
+            <div>
+
+                <small>
+                    Location
+                </small>
+
+                <strong>
+                    {{ input_data.Location }}
+                </strong>
+
+            </div>
+
+
+            <!-- CONDITION -->
+
+            <div>
+
+                <small>
+                    Condition
+                </small>
+
+                <strong>
+                    {{ input_data.Condition }}
+                </strong>
+
+            </div>
+
+
+            <!-- GARAGE -->
+
+            <div>
+
+                <small>
+                    Garage
+                </small>
+
+                <strong>
+                    {{ input_data.Garage }}
+                </strong>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================
+         MODEL COMPARISON
+    ================================== -->
+
+    <div class="card">
+
+        <div class="section-title">
+
+            <span>
+                📊
+            </span>
+
+            <div>
+
+                <h2>
+                    Model Comparison
+                </h2>
+
+                <p>
+                    Prediction and performance of every regression model
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Model
+                        </th>
+
+                        <th>
+                            Predicted Price
+                        </th>
+
+                        <th>
+                            R² Score
+                        </th>
+
+                        <th>
+                            MAE
+                        </th>
+
+                        <th>
+                            RMSE
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for item in predictions %}
+
+                    <tr
+                        {% if item.model == best_model %}
+                            class="best-row"
+                        {% endif %}
+                    >
+
+
+                        <!-- MODEL -->
+
+                        <td>
+
+                            <div class="model-name">
+
+                                {% if item.model == best_model %}
+
+                                <span class="best-badge">
+                                     
+                                </span>
+
+                                {% endif %}
+
+                                {{ item.model }}
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- PRICE -->
+
+                        <td class="price">
+
+                            ₹ {{ "{:,.2f}".format(item.prediction) }}
+
+                        </td>
+
+
+                        <!-- R2 -->
+
+                        <td>
+
+                            <span class="r2">
+                                {{ item.r2 }}
+                            </span>
+
+                        </td>
+
+
+                        <!-- MAE -->
+
+                        <td>
+
+                            ₹ {{ "{:,.2f}".format(item.mae) }}
+
+                        </td>
+
+
+                        <!-- RMSE -->
+
+                        <td>
+
+                            ₹ {{ "{:,.2f}".format(item.rmse) }}
+
+                        </td>
+
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================
+         METRIC INFORMATION
+    ================================== -->
+
+    <div class="metrics-info">
+
+        <div>
+
+            <strong>
+                R²
+            </strong>
+
+            <span>
+                Higher is better
+            </span>
+
+        </div>
+
+
+        <div>
+
+            <strong>
+                MAE
+            </strong>
+
+            <span>
+                Lower is better
+            </span>
+
+        </div>
+
+
+        <div>
+
+            <strong>
+                RMSE
+            </strong>
+
+            <span>
+                Lower is better
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================
+         NEW PREDICTION
+    ================================== -->
+
+    <div class="new-prediction-container">
+
+        <a
+            href="/"
+            class="new-prediction-btn"
+        >
+
+            🔄 Make New Prediction
+
+        </a>
+
+    </div>
+
+
+    {% endif %}
+
+
+    <!-- =================================
+         FOOTER
+    ================================== -->
+
+    <footer>
+
+        House Price Prediction
+        •
+        Machine Learning
+        •
+        FastAPI
+
+    </footer>
+
+
+</div>
+
+
+</body>
+
+</html>
